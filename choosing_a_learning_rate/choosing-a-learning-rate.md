@@ -1,6 +1,8 @@
 # Deep Neural Networks: Choosing a Learning Rate
 
-### Original Paper: Cyclical Learning Rates for Training Neural Networks by Leslie Smith
+### Original Paper: [Cyclical Learning Rates for Training Neural Networks](https://arxiv.org/abs/1506.01186) by Leslie Smith
+
+![Alt](./choosing-a-learning-rate-header.png "Header")
 
 ## Motivation
 
@@ -12,6 +14,9 @@ One of the most arduous tasks of training a deep neural network is picking the l
 In a classical gradient descent problem, one often fears the local minimum. However, stochastic gradient descent (SGD) solves this pretty well. The author suggests that intuitively, CLR succeeds because of the way it combats saddles.
 "Saddle points have small gradients that slow the learning process. However, increasing the learning rate allows more rapid traversal of saddle point plateaus."
 For instance consider stochastic gradient descent on the following function, which contains two large saddle points.
+
+![Alt](./saddle-diagram.jpeg "Saddle diagram")
+
 If your learning rate and iteration size are too small, you would get stuck on the plateaus of the saddle points. Even if you tried randomly restarting as one does in stochastic gradient descent, you would likely still miss the minima unless you spawned there.
 Adaptive Learning Rates
 Your first idea might be to try and adapt your learning rate based on the current slope. This is a good idea. In the related work section, the author references several previous works using an adaptive learning rate that improves accuracy. However, most of these come at significant computational cost, and therefore time. CLR is different in that the computation cost is negligible (you just alter the rate by a constant value), yet it provides the same benefits.
@@ -19,6 +24,9 @@ Your first idea might be to try and adapt your learning rate based on the curren
 ## Triangular Method
 
 The author first presents a simple solution- linearly increase and decrease the learning rate between two bounds. The example above highlights the success of this approach. You would be able to speed up over the plateau, and slow down during the middle peak. However, it can be challenging to choose the bounds. The author suggests the following LR range test- run for many values and plot accuracy against LR. Imagine you get the following plot
+
+![Alt](./triangular-rate.jpeg "Triangular rate diagram")
+
 The optimal learning rate is usually when the accuracy is increasing the most. In our example, thats between .02 and .05. So, take those as your minimum and maximum LR values.
 
 ## Tuning
